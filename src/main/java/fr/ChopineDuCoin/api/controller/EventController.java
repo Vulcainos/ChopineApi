@@ -58,12 +58,6 @@ public class EventController {
 		return Collections.singletonMap("success", true);
 	}
 
-	/*@PutMapping(path = "/Events")
-    public Map<String, Boolean> addEvents(@RequestBody Iterable<Event> Events, HttpServletRequest request) {
-		EventRepository.saveAll(Events);
-        return Collections.singletonMap("success", true);
-    }*/
-
 	@DeleteMapping(path = "/event")
 	public Map<String, String> deleteTransaction(@RequestBody Map<String, String> param, HttpServletRequest request) {
 		int id = Integer.parseInt(param.get("id"));
