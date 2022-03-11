@@ -58,7 +58,7 @@ mvn spring-boot:run
  
  > DELETE /event
  > 
- > Supprime un pokemon de la base, seulement si il est désactivé. 
+ > Supprime un event de la base, seulement si il est désactivé. 
  >
  > Exemple de JSON dans le body `{
     "id": "1"

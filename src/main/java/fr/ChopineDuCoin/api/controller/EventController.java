@@ -1,22 +1,15 @@
 package fr.ChopineDuCoin.api.controller;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,9 +54,7 @@ public class EventController {
 	@DeleteMapping(path = "/event")
 	public Map<String, String> deleteTransaction(@RequestBody Map<String, String> param, HttpServletRequest request) {
 		int id = Integer.parseInt(param.get("id"));
-		if (!EventRepository.existsById(id)) Collections.singletonMap("error", "Event not exist");
-		/*if (EventRepository.findById(id)) Collections.singletonMap("error", "Event is enabled");
-        EventRepository.deleteById(id);*/
+		if (!EventRepository.existsById(id)) return Collections.singletonMap("error", "Event not exist");
 		Event event = EventRepository.findById(id);
 		event.setEnable(false);
 		EventRepository.save(event);
