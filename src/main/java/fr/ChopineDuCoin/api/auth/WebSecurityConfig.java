@@ -25,13 +25,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-	    PasswordEncoder encoder = new BCryptPasswordEncoder();
-	    return encoder;
+	    return new BCryptPasswordEncoder();
 	}
+	
+	/*@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	      auth.inMemoryAuthentication()
+	         .withUser("springuser").password(passwordEncoder().encode("spring123")).roles("USER")
+	         .and()
+	         .withUser("springadmin").password(passwordEncoder().encode("admin123")).roles("ADMIN", "USER");
+	}*/
 
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http
+        .authorizeRequests()
+        .antMatchers("/admin").hasRole("ADMIN")
+        .antMatchers("/user").hasRole("USER")
+        .anyRequest().authenticated()
+        .and()
+        .formLogin();
+		/*http
 		.authorizeRequests()
 		.antMatchers("/", "/calendrier", "/register", "/addUser").permitAll()
 		//.antMatchers("/admin", "/addCalendrier", "/removeCalendrier", "/adminUser", "/desactiveUser", "/activeUser", "/removeUser").hasAuthority("ROLE_ADMIN")
@@ -49,6 +63,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 		.rememberMe()
 
-		.and().csrf().disable();
+		.and().csrf().disable();*/
 	}
 }

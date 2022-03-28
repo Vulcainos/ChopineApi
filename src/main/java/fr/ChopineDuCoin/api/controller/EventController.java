@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Map;
 
+import javax.annotation.security.RolesAllowed;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,19 @@ public class EventController {
 	@Autowired 
 	private EventRepository EventRepository;
 
+	@RolesAllowed({"ADMIN"})
 	@GetMapping(path = "/event/all")
 	public Iterable<Event> getAllEvent(HttpServletRequest request) {
 		return EventRepository.findAll();
 	}
 
+	@RolesAllowed("USER")
 	@GetMapping(path = "/event/futur")
 	public Iterable<Event> getFuturEvent(HttpServletRequest request) {
 		return EventRepository.findAllFutur();
 	}
 
+	@RolesAllowed({"ADMIN"})
 	@PutMapping(path = "/event")
 	public Map<String, Boolean> addFuturEvent(@RequestBody Map<String, String> param, HttpServletRequest request) {
 
@@ -51,6 +55,7 @@ public class EventController {
 		return Collections.singletonMap("success", true);
 	}
 
+	@RolesAllowed({"ADMIN"})
 	@DeleteMapping(path = "/event")
 	public Map<String, String> deleteTransaction(@RequestBody Map<String, String> param, HttpServletRequest request) {
 		int id = Integer.parseInt(param.get("id"));
